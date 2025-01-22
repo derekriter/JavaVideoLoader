@@ -1,7 +1,9 @@
 import org.opencv.core.Core;
-import org.opencv.core.Mat;
 import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
+
+import java.io.InputStream;
 
 class JavaVideoLoader {
 
@@ -22,6 +24,11 @@ class JavaVideoLoader {
         mc5.setTo(new Scalar(5));
 
         System.out.println("OpenCV Mat data:\n" + m.dump());
-    }
 
+        InputStream video = JavaVideoLoader.class.getClassLoader().getResourceAsStream("BadApple.mp4");
+        try {
+            video.close();
+        }
+        catch(Exception e) {e.printStackTrace();}
+    }
 }
