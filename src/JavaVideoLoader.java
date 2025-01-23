@@ -1,9 +1,7 @@
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
+import org.opencv.videoio.VideoCapture;
 
-import java.io.InputStream;
+import java.io.IOException;
 
 class JavaVideoLoader {
 
@@ -11,24 +9,13 @@ class JavaVideoLoader {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to OpenCV " + Core.VERSION);
+    public static String videoName = "res/BadApple.mp4";
 
-        Mat m = new Mat(5, 10, CvType.CV_8UC1, new Scalar(0));
-        System.out.println("OpenCV Mat: " + m);
+    public static void main(String[] args) throws IOException {
+        VideoCapture vc = new VideoCapture(videoName);
+        if(!vc.isOpened())
+                throw new IOException("Failed to open VideoCapture");
 
-        Mat mr1 = m.row(1);
-        mr1.setTo(new Scalar(1));
-
-        Mat mc5 = m.col(5);
-        mc5.setTo(new Scalar(5));
-
-        System.out.println("OpenCV Mat data:\n" + m.dump());
-
-        InputStream video = JavaVideoLoader.class.getClassLoader().getResourceAsStream("BadApple.mp4");
-        try {
-            video.close();
-        }
-        catch(Exception e) {e.printStackTrace();}
+        System.out.println(vc.getBackendName());
     }
 }

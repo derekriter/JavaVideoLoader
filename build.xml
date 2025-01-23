@@ -29,8 +29,11 @@
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
             </manifest>
-            <fileset dir="res/"/>
+<!--            <fileset dir="res/"/>-->
         </jar>
+        <copy todir="${jar.dir}/res/" failonerror="true" force="true" overwrite="true">
+            <fileset dir="res/"/>
+        </copy>
     </target>
 
     <target name="run" depends="jar">
