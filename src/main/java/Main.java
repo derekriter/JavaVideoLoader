@@ -1,19 +1,32 @@
+import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.FrameGrabber.Exception;
 
-import java.io.IOException;
+import java.awt.Dimension;
 import java.util.Map;
 
 class Main {
 
     public static String videoName = "BadApple.mp4";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(Main.class.getResourceAsStream(videoName));
         grabber.start();
+        grabber.setVideoFrameNumber(10 * 24);
 
-        displayVideoInfo(videoName, grabber);
+//        displayVideoInfo(videoName, grabber);
 
-        grabber.close();
+        CanvasFrame canvas = new CanvasFrame("JavaVideoLoader");
+        canvas.setVisible(false);
+        canvas.setDefaultCloseOperation(CanvasFrame.EXIT_ON_CLOSE);
+        canvas.getCanvas().setPreferredSize(new Dimension(grabber.getImageWidth(), grabber.getImageHeight()));
+        canvas.showImage(grabber.grabFrame());
+        canvas.pack();
+        canvas.setLocationRelativeTo(null);
+        canvas.setResizable(false);
+        canvas.setVisible(true);
+
+        grabber.release();
     }
 
     private static void displayVideoInfo(String filename, FFmpegFrameGrabber grabber) {
