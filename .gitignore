@@ -29,5 +29,5 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-build/
+target/
 JavaVideoLoader.iml
